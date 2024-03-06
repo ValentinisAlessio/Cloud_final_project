@@ -1,0 +1,66 @@
+from locust import HttpUser, task, between
+from requests.auth import HTTPBasicAuth
+import requests
+import random
+
+with open("/mnt/locust/output.txt", "a") as f:
+    f.write(f"_________________________________________________\n")
+
+class NextcloudUser(HttpUser):
+    auth = None
+    user_name = None
+    wait_time = between(1, 5)
+
+    def on_start(self):
+        user_idx = random.randrange(0, 40)
+        self.user_name = f'locust_user{user_idx}'
+        self.auth = HTTPBasicAuth(self.user_name, 'test_password1234!')
+
+
+    def verify_authentication(self):
+        response = self.client.head("/remote.php/dav", auth=self.auth)
+        if response.status_code != 200:
+            with open("/mnt/locust/output.txt", "a") as f:
+                f.write(f"Authentication failed for user {self.user_name}: {response.text}.\n")
+            raise Exception(f"Authentication failed for user {self.user_name}")
+
+    
+    @task
+    def propfind(self):
+        try:
+            response = self.client.request("PROPFIND", f"/remote.php/dav/files/{self.user_name}/", auth=self.auth)
+            response.raise_for_status()
+        except Exception as e:
+            with open("/mnt/locust/output.txt", "a") as f:
+                f.write(f"Error during PROPFIND request: {e} for user {self.user_name}.\n")
+
+
+    # @task
+    # def read_file_test(self):
+    #     try:
+    #         response = self.client.get(f"/remote.php/dav/files/{self.user_name}/test.txt", auth=self.auth)
+    #         response.raise_for_status()
+    #     except Exception as e:
+    #         with open("/mnt/locust/output.txt", "a") as f:
+    #             f.write(f"Error during GET request: {e} for user {self.user_name}.\n")
+
+    @task
+    def upload_file_1kb(self):
+        try:
+            path = f'/remote.php/dav/files/{self.user_name}/1kb_file_{random.randrange(0, 20)}'
+            with open("/test_data/test_1kb", "rb") as f:
+                self.client.put(path, data=f, auth=self.auth)
+        except Exception as e:
+            with open("/mnt/locust/output.txt", "a") as f:
+                f.write(f"Error during PUT request: {e} for user {self.user_name}.\n")
+
+    
+    @task
+    def upload_file_1mb(self):
+        try:
+            path = f'/remote.php/dav/files/{self.user_name}/1mb_file_{random.randrange(0, 20)}'
+            with open("/test_data/test_1mb", "rb") as f:
+                self.client.put(path, data=f, auth=self.auth)
+        except Exception as e:
+            with open("/mnt/locust/output.txt", "a") as f:
+                f.write(f"Error during PUT request: {e} for user {self.user_name}.\n")
