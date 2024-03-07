@@ -48,6 +48,7 @@ class NextcloudUser(HttpUser):
             path = f'/remote.php/dav/files/{self.user_name}/1kb_file_{random.randrange(0, 20)}'
             with open("/test_data/test_1kb", "rb") as f:
                 self.client.put(path, data=f, auth=self.auth)
+            self.client.delete(path, auth=self.auth)
         except Exception as e:
             with open("/locust_tasks/output.txt", "a") as f:
                 f.write(f"Error during PUT request: {e} for user {self.user_name}.\n")
@@ -58,6 +59,7 @@ class NextcloudUser(HttpUser):
             path = f'/remote.php/dav/files/{self.user_name}/1mb_file_{random.randrange(0, 20)}'
             with open("/test_data/test_1mb", "rb") as f:
                 self.client.put(path, data=f, auth=self.auth)
+            self.client.delete(path, auth=self.auth)
         except Exception as e:
             with open("/locust_tasks/output.txt", "a") as f:
                 f.write(f"Error during PUT request: {e} for user {self.user_name}.\n")
@@ -67,6 +69,7 @@ class NextcloudUser(HttpUser):
             path = f'/remote.php/dav/files/{self.user_name}/1gb_file_{random.randrange(0, 20)}'
             with open("/test_data/test_1gb", "rb") as f:
                 self.client.put(path, data=f, auth=self.auth)
+            self.client.delete(path, auth=self.auth)
         except Exception as e:
             with open("/locust_tasks/output.txt", "a") as f:
                 f.write(f"Error during PUT request: {e} for user {self.user_name}.\n")
