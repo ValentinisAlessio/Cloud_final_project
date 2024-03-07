@@ -25,7 +25,6 @@ class NextcloudUser(HttpUser):
             raise Exception(f"Authentication failed for user {self.user_name}")
 
     
-    @task
     def propfind(self):
         try:
             response = self.client.request("PROPFIND", f"/remote.php/dav/files/{self.user_name}/", auth=self.auth)
@@ -44,7 +43,6 @@ class NextcloudUser(HttpUser):
     #         with open("/mnt/locust/output.txt", "a") as f:
     #             f.write(f"Error during GET request: {e} for user {self.user_name}.\n")
 
-    @task
     def upload_file_1kb(self):
         try:
             path = f'/remote.php/dav/files/{self.user_name}/1kb_file_{random.randrange(0, 20)}'
@@ -55,7 +53,6 @@ class NextcloudUser(HttpUser):
                 f.write(f"Error during PUT request: {e} for user {self.user_name}.\n")
 
     
-    @task
     def upload_file_1mb(self):
         try:
             path = f'/remote.php/dav/files/{self.user_name}/1mb_file_{random.randrange(0, 20)}'
@@ -64,3 +61,15 @@ class NextcloudUser(HttpUser):
         except Exception as e:
             with open("/mnt/locust/output.txt", "a") as f:
                 f.write(f"Error during PUT request: {e} for user {self.user_name}.\n")
+
+    
+    @task(1)
+    def proper_task(self):
+        random_flat = random.random()
+
+        if random_flat < 0.3:
+            self.propfind()
+        if random_flat < 0.6:
+            self.upload_file_1kb()
+        else:
+            self.upload_file_1mb()
