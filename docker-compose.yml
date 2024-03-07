@@ -5,7 +5,7 @@ services:
   nc:
     image: nextcloud:latest
     container_name: nextcloud
-    restart: unless-stopped
+    restart: always
     networks:
       - nextcloud_network
     depends_on:
@@ -25,7 +25,7 @@ services:
   db:
     image: mariadb
     container_name: nextcloud_db
-    restart: unless-stopped
+    restart: always
     networks:
       - nextcloud_network
     environment:
@@ -44,12 +44,9 @@ services:
     ports:
       - "8089:8089"
     volumes:
-      - ./:/mnt/locust
+      - ./locust_tasks:/locust_tasks
       - ./test_data:/test_data
-    command: -f /mnt/locust/locustest.py -H http://nextcloud:80 
-    environment:
-      - LOCUST_MODE=standalone
-      - LOCUST_TARGET_URL=http://nextcloud
+    command: -f /locust_tasks/locustest.py -H http://nextcloud:80 
 
 volumes:
   nextcloud:
