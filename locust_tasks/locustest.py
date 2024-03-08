@@ -86,4 +86,4 @@ class NextcloudUser(HttpUser):
         elif random_flat < 0.75:
             self.upload_file_1mb()
         else:
-            self.upload_file_1gb()
+            self.read_file_test()
