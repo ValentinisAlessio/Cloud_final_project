@@ -79,11 +79,13 @@ class NextcloudUser(HttpUser):
     def proper_task(self):
         random_flat = random.random()
 
-        if random_flat < 0.25:
+        if random_flat < 0.20:
             self.propfind()
-        if random_flat < 0.5:
+        if random_flat < 0.4:
             self.upload_file_1kb()
-        elif random_flat < 0.75:
+        elif random_flat < 0.6:
             self.upload_file_1mb()
+        elif random_flat < 8:
+            self.upload_file_1gb()
         else:
             self.read_file_test()

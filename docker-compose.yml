@@ -59,10 +59,26 @@ services:
       - ./test_data:/test_data
     command: -f /locust_tasks/locustest.py -H http://nextcloud:80 
 
+  # nginx-proxy:
+  #   image: 'jc21/nginx-proxy-manager:latest'
+  #   container_name: nginx-proxy
+  #   restart: always
+  #   networks:
+  #     - nextcloud_network
+  #   ports:
+  #     - '80:80'
+  #     - '81:81'
+  #     - '443:443'
+  #   volumes:
+  #     - nginx-data:/data
+  #     - nginx-encrypt:/etc/letsencrypt
+
 volumes:
   nextcloud:
   db:
   redis:
+  # nginx-data:
+  # nginx-encrypt:
 
 networks:
   nextcloud_network:
