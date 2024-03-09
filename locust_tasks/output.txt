@@ -833,3 +833,6 @@ Error during PUT request: [Errno 2] No such file or directory: '/test_data/test_
 Error during PUT request: [Errno 2] No such file or directory: '/test_data/test_1gb' for user locust_user28.
 Error during PUT request: [Errno 2] No such file or directory: '/test_data/test_1gb' for user locust_user7.
 _________________________________________________
+_________________________________________________
+_________________________________________________
+Error during GET request: 404 Client Error: Not Found for url: http://nextcloud:80/remote.php/dav/files/locust_user4/Readme.md for user locust_user4.

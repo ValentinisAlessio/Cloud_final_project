@@ -33,8 +33,19 @@ services:
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=password
+      - REDIS_HOST=redis
+      - REDIS_HOST_PASSWORD=redis
     volumes:
       - db:/var/lib/mysql
+
+  redis:
+    image: redis:alpine
+    container_name: nextcloud_redis
+    networks:
+      - nextcloud_network
+    volumes:
+      - redis:/data
+    command: redis-server --requirepass redis
 
   locust:
     image: locustio/locust
@@ -51,6 +62,7 @@ services:
 volumes:
   nextcloud:
   db:
+  redis:
 
 networks:
   nextcloud_network:
