@@ -9,3 +9,8 @@
 \contentsline {subsection}{\numberline {3.1}Nextcloud setting}{4}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Testing with Locust}{4}{subsection.3.2}%
 \contentsline {subsection}{\numberline {3.3}Results of the load test}{5}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Scalability}{6}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Deployement on an existing NFS / Storage Server}{6}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Advantages}{6}{subsubsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.2}Cloud Deployement}{7}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Advantages}{7}{subsubsection.4.2.1}%

@@ -24,7 +24,7 @@
 \usepackage{natbib} 
 \crefname{equation}{}{}
 
-\title{Cloud Computing Final Project}
+\title{Cloud Computing Basic Final Project}
 \author{Valentinis Alessio [SM3800008]}
 \date{03/2024}
 
@@ -147,5 +147,56 @@
 	\end{verbatim}
 	
 	\subsection{Results of the load test}
+	The test of the file system was conducted on my own PC, an Asus Vivobook15, with an Intel i7 10th gen CPU and 8GB of RAM, launching the containers from WSL on Windows. For all these tests, Server Side Encryption is enabled, so we expect in general worse performance.
+	
+	The test is divided in two parts, one concerning management of files up to 1MB, so sticking to a medium-size file, while the second part assess the management also of 1GB files.
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.7\linewidth]{total_requests_per_second_40user1mb}
+		\caption{Load test for medium-sized files, 40 users and 5 concurrent accesses.}
+		\label{fig:totalrequestspersecond40user1mb}
+	\end{figure}
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.7\linewidth]{response_times_(ms)_20users_1gb}
+		\caption{Load test for large size files, 20 users and 2 concurrent accesses.}
+		\label{fig:responsetimesms20users1gb}
+	\end{figure}
+	
+	As we can see from the figures above, as long as we stick to medium-sized files, we have pretty good performance, being able to manage 40 users without any difficulty and satisfying more than 20 requests per second. Also the mean response time is fairly low, dropping below 1 second.
+	
+	Anyway, as soon as we switch to a large-sized file test, we are no more able to manage efficiently all the requests, stopping at less than 2 requests per second, with and average response time of about 30s. This fact of course should request more accurate tests, in order to pinpoint the exact problem, i.e. if we are delaing with an archietecture problem or an implementation problem. However, I'm pretty confident this is an archietecture issue, as the server doen't face any overload issue, as the number of failures sticks to zero: this give me confidence that the worse performance is most probably due only to an archietecture constraint, also consifìdering I'm managing these containers from WSL on a Windows machine (which by themselves occupy a lot of resources), and as soon as a 1GB PUT request is issued, the whole hardware is stuck to manage that request, so every other request is put on hold.
+	
+	\section{Scalability}
+	In this section the aim is to propose some solutions to address an inreasing number of users and request for the delpoyed system, trying and analyze pros and cost issues of each.
+	
+	\subsection{Deployement on an existing NFS / Storage Server}
+	If we suppose that a company already owns a storage Server, centralized or distributed, it should be optimal to deploy the Nextcloud instance with a shared ready database. In this context, a DBSM like PstgreSQL or MariaDB could be a suitable choice, as they are robust softwares, capable of managing many concurrent accesses, also from multiple nodes. To manage work balance between the different nodes, inplementing also a reverse-proxy instance, like said in the first section, may easilly ease the workload balance. Moreover, a backup and redundant system to ensure data availability and recovery in case of any kind of fail: for this purpose CEPH could be a suitable choice.
+	
+	\subsubsection{Advantages}
+	\begin{itemize}
+		\item \textbf{Infrastructure control}:  as we are delaing with a physical storage installation, the organization has full control over the infrastructure, making it easy to control.
+		\item \textbf{Personalization}: dealing with a physical hardware upon which we are deploying a Nextcloud instance, can allow us to personalize the hardware infrastructure at need, based on required performance or compatibiliy with other hardwares.
+		\item \textbf{Costs}: Being able to choose almost everything regarding the hardware on which we plan to base our deployement, besides the initial cost to deal with the actual hardware installation, all future costs of maintainability is much lower.
+		\item \textbf{Security}: the organization can authonomously choose and implement its own security policy, without relying on other providers.
+		\item \textbf{Location of data}: this solution ensures that the data stays into the physical or virtual infrastructure chosen by the organization, which is crucial when dealing with sensible data.
+	\end{itemize}
+	
+	\subsection{Cloud Deployement}
+	Opting for a Cloud provider may offer by default scalability and flexibility for your file system. One of the solution that can be assessed is relying on a cloud database, leveraging the horizontal scaling capability of the cloud provider to balance the load of the infrastructure.
+	Data is considered to be stored in an Object File System, like Amazon S3, ensuring almost flawless scalability and storage capabilities. In order to satisfy variable workloads and manage accordingly the cost of the deployement, relying on the autoscalability feature of a cloud provider becomes a must.
+	
+	The choice of Amazon S3 as storage system comes from the capabilities of AWS services. Amazon Web Services offer robust autoscaling features, allowing for dynamical adjustment of the resources based on the demand of the infrastructure. Furthermore the principle of composability of its Object File System allows for seamless scaling of only those resources needed. Lastly, being based on an Object Storage System, it's suitable for handling large sized files, easilly offering also backup and replication options, and offering database systems, which can be used as backend for Nextcloud.
+	
+	\subsubsection{Advantages}
+	\begin{itemize}
+		\item \textbf{Scalability}: In general, cloud providers offer seamless horizontal scalability, allowing to quickly adapt on user demands and varying workload.
+		\item \textbf{Managed services}: using a cloud provider can ease the need of infrastructure and database management, as offered by the provider.
+		\item \textbf{World Wide Availability}: leveraging a cloud provider service, we implicitely rely on world-spread data centers, that enable global accessibility while ensuring consistent availability at reduced latency based on the region from which you are accessing the data.
+		\item \textbf{Cost efficiency}: Leveraging the cloud, costs are based on the pay-as-you-go model, that can ease the costs for organizations with very variable workload demands.
+	\end{itemize}
+	
 	
 \end{document}

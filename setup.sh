@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Set the path to the file to upload
-FILE_TO_UPLOAD="test_data/test.txt"
-
 # Loop to create users
 for user in $(seq 0 39); do
     # Create user using Docker exec

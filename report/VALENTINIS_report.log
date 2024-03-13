@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=pdflatex 2021.11.16)  12 MAR 2024 18:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=pdflatex 2021.11.16)  13 MAR 2024 11:42
 entering extended mode
 **./VALENTINIS_report.tex
 (VALENTINIS_report.tex
@@ -975,35 +975,53 @@ Overfull \hbox (4.10725pt too wide) in paragraph at lines 92--93
 ose.yml []\OT1/cmr/m/n/10 file you can eas-illy mod-ify the back-end database,
  []
 
-[3] [4] [5] (VALENTINIS_report.aux)
+[3] [4]
+<total_requests_per_second_40user1mb.png, id=112, 1845.89626pt x 1129.21875pt>
+File: total_requests_per_second_40user1mb.png Graphic file (type png)
+<use total_requests_per_second_40user1mb.png>
+Package pdftex.def Info: total_requests_per_second_40user1mb.png  used on input
+ line 156.
+(pdftex.def)             Requested size: 298.47348pt x 182.59126pt.
+<response_times_(ms)_20users_1gb.png, id=114, 1845.89626pt x 1129.21875pt>
+File: response_times_(ms)_20users_1gb.png Graphic file (type png)
+<use response_times_(ms)_20users_1gb.png>
+Package pdftex.def Info: response_times_(ms)_20users_1gb.png  used on input lin
+e 163.
+(pdftex.def)             Requested size: 298.47348pt x 182.59126pt.
 
-Package rerunfilecheck Warning: File `VALENTINIS_report.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
 
-Package rerunfilecheck Info: Checksums for `VALENTINIS_report.out':
-(rerunfilecheck)             Before: C35BCA26720C84DCACA6C834E03AB2DF;1782
-(rerunfilecheck)             After:  85DBF1D2608971ED049E719D6336EEA2;1972.
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[5 <./total_requests_per_second_40user1mb.png>]
+Overfull \hbox (0.45619pt too wide) in paragraph at lines 181--182
+[]\OT1/cmr/bx/n/10 Personalization\OT1/cmr/m/n/10 : deal-ing with a phys-i-cal 
+hard-ware upon which we are de-ploy-ing a Nextcloud
+ []
+
+[6 <./response_times_(ms)_20users_1gb.png>] [7] (VALENTINIS_report.aux)
+Package rerunfilecheck Info: File `VALENTINIS_report.out' has not changed.
+(rerunfilecheck)             Checksum: 62873EAD47EF404DE75D2CF5C6360B2F;2767.
  ) 
 Here is how much of TeX's memory you used:
- 34529 strings out of 479321
- 782022 string characters out of 2866500
+ 34577 strings out of 479321
+ 783126 string characters out of 2866500
  1181211 words of memory out of 3000000
- 51422 multiletter control sequences out of 15000+600000
- 407795 words of font info for 44 fonts, out of 8000000 for 9000
+ 51457 multiletter control sequences out of 15000+600000
+ 408747 words of font info for 47 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,6n,131p,932b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 102i,6n,131p,945b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
  <C:\Users\aleva\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
 1000.pk><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/
 Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program File
-s/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX/font
-s/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/publi
-c/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm
-/cmti10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-
-Output written on VALENTINIS_report.pdf (5 pages, 126279 bytes).
+s/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Program Files/MiKTeX/font
+s/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX/fonts/type1/publi
+c/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm
+/cmr17.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><
+C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmti9.pfb><C:/Program Fi
+les/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on VALENTINIS_report.pdf (7 pages, 351085 bytes).
 PDF statistics:
- 119 PDF objects out of 1000 (max. 8388607)
- 18 named destinations out of 1000 (max. 500000)
- 93 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 175 PDF objects out of 1000 (max. 8388607)
+ 27 named destinations out of 1000 (max. 500000)
+ 151 words of extra memory for PDF output out of 10000 (max. 10000000)
 
