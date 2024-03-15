@@ -1,47 +1,71 @@
 # Cloud_final_project
-Repository of the final assignment for cloud computing exam
+Repository containing scrpts and report for the final assignment for the Cloud Computing (basic module) final exam.
+Followingly the instructions for deploying the system and the tests. Just a copy-paste of the deployement section of the report.
 
 ## Deployement
-First, to spool up the container images, a `docker-compose.yml` file is provided, so just run
+The infrastructure has been deployed using Docker along with Docker Compose, which serves as a fundamental container orchestration tool developed by Docker. %Check this part.
+In particular, leveraging docker-compose orchestrating capabilities, we can deploy several docker containers and the respective network and volumes, only with one command: go to the main directory, containing the \verb|docker-compose.yml| file and perform
 
-```sh
+```bash
 docker-compose up -d
 ```
-This way you are able to access the nextcloud instance with your browser through `http://localhost:8080`.
 
-To be able to perform tests, I've set up a Locust container, but before running it, you first need to create various users that will be used.
+Doing this we have spawned:
+- **Nextcloud** container with a dedicated volume
+- **MariaDB** container with a dedicated volume
+- **Locust** container
+- A common **network** that connect all the containers.
 
-In order to do this, before creating the actual users, just perform
-```sh
+Also, by just modifing the `docker-compose.yml` file you can easilly modify the backend database, the network of the containers, also with the possibility of connecting it to an existing one.
+
+### Nextcloud setting
+Before beginning, if you want to modify the maximum space allocated to each user of Nextcloud, you should modify a .dotfile into the Nextcloud instance.
+
+In order to do this, you can enter the Nextcloud container, through
+```bash
+docker exec -it nextcloud /bin/bash
+apt update
+apt install vim
+vim .htaccess
+```
+And then paste this section
+```bash
+php_value memory_limit 2G
+php_value upload_max_filesize 4G
+php_value post_max_size 4G
+php_value max_input_time 3600
+php_value max_execution_time 3600
+```
+
+Now you can access the container instantiation through `http://localhost:8080`, and using the admin credentials set in the environment of the instance in the `docker-compose.yml`, you can access in your admin account.
+Now your file system is up and running.
+
+## Testing with Locust
+As previously announced, in order to assess the performance of my file system, I decided to use the Python library Locust.
+
+Before starting, it's useful to know that as a security measure, docker by default authorizes requests made only by the localhost. So, to le the locust container make all the requests, we have to add it to the `trusted_domains` of the container. In order to achieve this result, we have to do this command:
+```bash
 docker exec --user www-data nextcloud /var/www/html/occ config:system:set trusted_domains 1 --value=nextcloud
 ```
-as otherwise nextcloud by default only authorizes operations made by `localhost`.
 
-Now you can create user instances, in my framework 40, by running
+**Warning**: If you don't perform this step, even if you are able to create all the users, tests launched from Locust will incur in \verb|permission denied| failure, failing all the tests.
+
+Once you have done this step, you can add all the users for the test, by simply perform the predefined script:
 ```bash
 sh setup.sh
 ```
 
-Now you are free to begin to stress the nextcloud instance by loggin to Locust through `http://localhost:8089` and lounching your stress test.
+Now, you should be up and running to perform your tests by logging to the Locust container through `http://localhost:8089` and start swarming requests.
 
-## NGINX proxy manager
-Before starting with nextcloud, start by configuring a secure access pattern through the use of an nginx reverse proxy. First connect to the port to which it is attached, so by running `localhost:81`.
+To perform the test, I provided a `locustest.py` that does different requests:
 
-Then insert the default admin user and password which are
-```
-username: admin@example.com
-password: changeme
-```
+- PROPFIND: HTTP request that asks to retreive some metadata associated to a directory;
+- GET: HTTP method that allows to retreive a default file created for each user;
+- PUT: HTTP method that allows to put on the system a file. I developed different methods that allow to upload (and right after delete, in order to preserve space) files of different sizes, namely 1kB, 1MB, 1GB in order to assess scalability of the system.
 
-Now you need to change them, for example with:
-```
-username: admin@nextcloud.com
-password: whatever-you-want
+
+**Warning**: In the repository I didn't put the 1GB file, as it exceedes the maximum size allowed from GitHub. To create it, just
+```bash
+dd if=/dev/zero of=test_1gb bs=1M count=1024
 ```
 
-Now you can add a new proxy host by 
-```
-Hosts -> Proxy Hosts -> Add Proxy Host
-```
-
-Now set a new proxy host with the settings you like.

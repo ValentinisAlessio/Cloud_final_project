@@ -73,21 +73,29 @@
 	
 	To manage Nextcloud metadata, a default solution provided by the Nextcloud docker image with SQLite. In order to have a system that can be more similar to one that could be put in a production environment, I opted to implement a MariaDB database backend, which is supported straightawat from Nextcloud. Other than MariaDB, Nextcloud offers support also for PostgreSQL: at this point the choice of the Database differ only in performance and replication/backup systems, which are foundamental when we are talking about commercial suites to assess scalability and backup issues.
 	
-	Furthermore, to try and optimize performance, a caching mechanism has been provided through a Redis container. This solution aims to ease the response time and overall system workload by keeping a cahe of the recently analyzed files. Its benefits will be analyzed in the \textit{Scalability} section.
+	Furthermore, to try and optimize performance, a caching mechanism has been provided through a Redis container. This solution aims to ease the response time and overall system workload by keeping a cahe of the recently analyzed files. Its benefits will be analyzed in the \ref*{sec:scalability} section.
 	
 	\subsection{Storage solutions}
-	Nextcloud, if not instructed differently, stores all its files in the local file system, which may be a convenient choice if we limit ourselves to a small deployement. In more advanced environments it offers pretty straight-forward solution based on an existing Storage Server, also in the form of a distributed File System (NFS), or to an Object File System, like an Amazon S3 bucket. Based on the requirements, the optimal solution may vary and I'll discuss this topic in the \textit{I dunno} section.
+	Nextcloud, if not instructed differently, stores all its files in the local file system, which may be a convenient choice if we limit ourselves to a small deployement. In more advanced environments it offers pretty straight-forward solution based on an existing Storage Server, also in the form of a distributed File System (NFS), or to an Object File System, like an Amazon S3 bucket. Based on the requirements, the optimal solution may vary and I'll discuss this topic in the \ref{sec:scalability} section.
 	
 	\subsection{Testing}
 	In order to have a more convenient and well documented testing environment, with a pretty easy implementation and a practical monitoring tool, I opted to connect this environment to a \textit{Locust} instance, a well-known Python package that allows to simulate user interaction with the system at a customize workload rate. As a first approach I tried to manage this issue with a local instance of Locust, but I quickly realized on how many dependencies it counted on, making the use of a containerized instance of absolute importance. Furthermore, doing this I could practically access via web browser to its instance and monitor real-time the results of the test.
 	
 	\section{Deployement}
 	The infrastructure has been deployed using Docker along with Docker Compose, which serves as a fundamental container orchestration tool developed by Docker. %Check this part.
-	In particular, leveraging docker-compose orchestrating capabilities, we can deploy several docker containers and the respective network and volumes, only with one command: got to the main directory, containing the \verb|docker-compose.yml| file and perform
+	In particular, leveraging docker-compose orchestrating capabilities, we can deploy several docker containers and the respective network and volumes, only with one command: go to the main directory, containing the \verb|docker-compose.yml| file and perform
 	
 	\begin{verbatim}
 		docker-compose up -d
 	\end{verbatim}
+	
+	Doing this we have spawned:
+	\begin{itemize}
+		\item \textbf{Nextcloud} container with a dedicated volume
+		\item \textbf{MariaDB} container with a dedicated volume
+		\item \textbf{Locust} container
+		\item A common \textbf{network} that connect all the containers.
+	\end{itemize}
 	
 	Also, by just modifing the \verb|docker-compose.yml| file you can easilly modify the backend database, the network of the containers, also with the possibility of connecting it to an existing one.
 	
@@ -124,7 +132,7 @@
 		trusted_domains 1 --value=nextcloud
 	\end{verbatim}
 	
-	\textbf{Warning}: If you don't perform this step, even if you are able to create all the users, tests launched from Locust will incur in permission denied, failing all the tests.
+	\textbf{Warning}: If you don't perform this step, even if you are able to create all the users, tests launched from Locust will incur in \verb|permission denied| failure, failing all the tests.
 	
 	Once you have done this step, you can add all the users for the test, by simply perform the predefined script:
 	\begin{verbatim}
@@ -154,22 +162,19 @@
 	\begin{figure}[h]
 		\centering
 		\includegraphics[width=0.7\linewidth]{total_requests_per_second_40user1mb}
-		\caption{Load test for medium-sized files, 40 users and 5 concurrent accesses.}
+		\caption{Load test for medium-sized files, 40 users.}
 		\label{fig:totalrequestspersecond40user1mb}
-	\end{figure}
-	
-	\begin{figure}[h]
-		\centering
 		\includegraphics[width=0.7\linewidth]{response_times_(ms)_20users_1gb}
-		\caption{Load test for large size files, 20 users and 2 concurrent accesses.}
+		\caption{Load test for large size files, 20 users.}
 		\label{fig:responsetimesms20users1gb}
 	\end{figure}
 	
-	As we can see from the figures above, as long as we stick to medium-sized files, we have pretty good performance, being able to manage 40 users without any difficulty and satisfying more than 20 requests per second. Also the mean response time is fairly low, dropping below 1 second.
+	As we can see from the figures \ref{fig:totalrequestspersecond40user1mb} and \ref{fig:responsetimesms20users1gb}, as long as we stick to medium-sized files, we have pretty good performance, being able to manage 40 users without any difficulty and satisfying more than 20 requests per second. Also the mean response time is fairly low, dropping below 1 second.
 	
 	Anyway, as soon as we switch to a large-sized file test, we are no more able to manage efficiently all the requests, stopping at less than 2 requests per second, with and average response time of about 30s. This fact of course should request more accurate tests, in order to pinpoint the exact problem, i.e. if we are delaing with an archietecture problem or an implementation problem. However, I'm pretty confident this is an archietecture issue, as the server doen't face any overload issue, as the number of failures sticks to zero: this give me confidence that the worse performance is most probably due only to an archietecture constraint, also consifìdering I'm managing these containers from WSL on a Windows machine (which by themselves occupy a lot of resources), and as soon as a 1GB PUT request is issued, the whole hardware is stuck to manage that request, so every other request is put on hold.
 	
 	\section{Scalability}
+	\label{sec:scalability}
 	In this section the aim is to propose some solutions to address an inreasing number of users and request for the delpoyed system, trying and analyze pros and cost issues of each.
 	
 	\subsection{Deployement on an existing NFS / Storage Server}
@@ -197,6 +202,25 @@
 		\item \textbf{World Wide Availability}: leveraging a cloud provider service, we implicitely rely on world-spread data centers, that enable global accessibility while ensuring consistent availability at reduced latency based on the region from which you are accessing the data.
 		\item \textbf{Cost efficiency}: Leveraging the cloud, costs are based on the pay-as-you-go model, that can ease the costs for organizations with very variable workload demands.
 	\end{itemize}
+	
+	\subsection{Cost efficiency assessment}
+	Given these two possible solutions, what results to be the best way to go? Of course this has not a unique answer, and it highly depends on what are the needs of the organization that aims to use this service.
+	
+	If we are dealing with a pre-built hardware, in which we have a pre built infrastructure, like a cluster or a storage server, the first solution looks optimal, as we incur only in the first deployement and eventual infrastructure cost, but then operationally, the economic demand may actually be lower. This may be even more effective if a company has a "stable", or at least well known and almost constant workoad, or number of requests: of course this solution may incur in a higher initial economic loss, but then, if the archietecture is built optimized for the number and type of users that will access this service, this can rapidly overcome a cloud solution in terms of cost optimization, as future maintenance costs are most likely reduced to the minimum.
+	
+	Conversely to an industry or a company, which may already have a physical storage system or be already aware of the workload that would be necessary to manage, a single user, or a little startup, may not have a physical hardware available, or more importantly may not want to address the huge initial costs of deployement. If this is the case, the most sensible approach may be the second, as a pay-as-you-go policy may be more suitable as it can reduce costs above all for those realities where you don't precisely know of how much space do you need and of how much workload your deployement will be facing.
+	
+	So, the optimal solution may be dependent on how your hardware availability and how variable your workloads are. Also, if you wat to optimize the costs of your deployement, given that the files you are uploading in the cloud system are not sensible, Server-Side-Encryption may be disabled to optimize space-management.
+	
+	\section{Conclusions}
+	In conclusion, this report outlined the implementation and assessment of a Cloud File System using Nextcloud, Docker, and Docker Compose. Nextcloud was chosen for its robust features, user-friendly interface, and scalability options. The report delved into various aspects, including user authentication and authorization, security measures, database solutions, storage options, and scalability considerations.
+	
+	Deployment was carried out using Docker and Docker Compose, allowing for easy orchestration of containers. Nextcloud settings were configured, including adjustments to user storage quotas. Testing was conducted using Locust, a Python library for simulating user interactions, to evaluate system performance under different workloads.
+	
+	Results showed satisfactory performance for managing medium-sized files but highlighted challenges with large-sized files, indicating potential architectural limitations. Scalability options were discussed, including deployment on existing NFS/storage servers and cloud-based solutions like Amazon S3. The choice between these options depends on factors such as existing infrastructure, workload variability, and cost considerations.
+	
+	Ultimately, the report provides insights into building and assessing a Cloud File System, highlighting both strengths and areas for improvement in system performance and scalability.
+	
 	
 	
 \end{document}
