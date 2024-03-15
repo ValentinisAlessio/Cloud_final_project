@@ -34,7 +34,6 @@ class NextcloudUser(HttpUser):
                 f.write(f"Error during PROPFIND request: {e} for user {self.user_name}.\n")
 
 
-    # @task
     def read_file_test(self):
         try:
             response = self.client.get(f"/remote.php/dav/files/{self.user_name}/Readme.md", auth=self.auth)
@@ -85,7 +84,7 @@ class NextcloudUser(HttpUser):
             self.upload_file_1kb()
         elif random_flat < 0.6:
             self.upload_file_1mb()
-        # elif random_flat < 8:
-        #     self.upload_file_1gb()
+        elif random_flat < 8:
+            self.upload_file_1gb()
         else:
             self.read_file_test()
