@@ -178,7 +178,7 @@
 	In this section the aim is to propose some solutions to address an inreasing number of users and request for the delpoyed system, trying and analyze pros and cost issues of each.
 	
 	\subsection{Deployement on an existing NFS / Storage Server}
-	If we suppose that a company already owns a storage Server, centralized or distributed, it should be optimal to deploy the Nextcloud instance with a shared ready database. In this context, a DBSM like PstgreSQL or MariaDB could be a suitable choice, as they are robust softwares, capable of managing many concurrent accesses, also from multiple nodes. To manage work balance between the different nodes, inplementing also a reverse-proxy instance, like said in the first section, may easilly ease the workload balance. Moreover, a backup and redundant system to ensure data availability and recovery in case of any kind of fail: for this purpose CEPH could be a suitable choice.
+	If we suppose that a company already owns a storage Server, centralized or distributed, it should be optimal to deploy the Nextcloud instance with a shared ready database. In this context, a DBSM like PostgreSQL or MariaDB could be a suitable choice, as they are robust softwares, capable of managing many concurrent accesses, also from multiple nodes. To manage work balance between the different nodes, inplementing also a reverse-proxy instance, like said in the first section, may easilly ease the workload balance. Moreover, a backup and redundant system to ensure data availability and recovery in case of any kind of fail: for this purpose CEPH could be a suitable choice.
 	
 	\subsubsection{Advantages}
 	\begin{itemize}
