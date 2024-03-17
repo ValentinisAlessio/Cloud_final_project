@@ -1,14 +1,9 @@
 # Cloud_final_project
-
-| Name | Surname | email | Master |
-|:---:|:---:|:---:|:---:|
-| Alessio | Valentinis | ALESSIO.VALENTINIS@studenti.units.it | DSAI |
-
 Repository containing scrpts and report for the final assignment for the Cloud Computing (basic module) final exam.
 Followingly the instructions for deploying the system and the tests. Just a copy-paste of the deployement section of the report.
 
 ## Deployement
-The infrastructure has been deployed using Docker along with Docker Compose, which serves as a fundamental container orchestration tool developed by Docker. %Check this part.
+The infrastructure has been deployed using Docker along with Docker Compose, which serves as a fundamental container orchestration tool developed by Docker.
 In particular, leveraging docker-compose orchestrating capabilities, we can deploy several docker containers and the respective network and volumes, only with one command: go to the main directory, containing the \verb|docker-compose.yml| file and perform
 
 ```bash
