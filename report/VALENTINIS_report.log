@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=pdflatex 2021.11.16)  16 MAR 2024 10:57
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=pdflatex 2021.11.16)  17 MAR 2024 13:41
 entering extended mode
 **./VALENTINIS_report.tex
 (VALENTINIS_report.tex
@@ -976,13 +976,13 @@ ose.yml []\OT1/cmr/m/n/10 file you can eas-illy mod-ify the back-end database,
  []
 
 [4]
-<total_requests_per_second_40user1mb.png, id=123, 1845.89626pt x 1129.21875pt>
+<total_requests_per_second_40user1mb.png, id=124, 1845.89626pt x 1129.21875pt>
 File: total_requests_per_second_40user1mb.png Graphic file (type png)
 <use total_requests_per_second_40user1mb.png>
 Package pdftex.def Info: total_requests_per_second_40user1mb.png  used on input
  line 164.
 (pdftex.def)             Requested size: 298.47348pt x 182.59126pt.
-<response_times_(ms)_20users_1gb.png, id=125, 1845.89626pt x 1129.21875pt>
+<response_times_(ms)_20users_1gb.png, id=126, 1845.89626pt x 1129.21875pt>
 File: response_times_(ms)_20users_1gb.png Graphic file (type png)
 <use response_times_(ms)_20users_1gb.png>
 Package pdftex.def Info: response_times_(ms)_20users_1gb.png  used on input lin
@@ -1004,13 +1004,13 @@ Package rerunfilecheck Info: File `VALENTINIS_report.out' has not changed.
 (rerunfilecheck)             Checksum: 699260366CD9D995C118D1EC00340171;3060.
  ) 
 Here is how much of TeX's memory you used:
- 34583 strings out of 479321
- 783205 string characters out of 2866500
+ 34584 strings out of 479321
+ 783235 string characters out of 2866500
  1182211 words of memory out of 3000000
- 51461 multiletter control sequences out of 15000+600000
+ 51462 multiletter control sequences out of 15000+600000
  408747 words of font info for 47 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,6n,131p,945b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 102i,6n,131p,933b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
  <C:\Users\aleva\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
 1000.pk><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/
 Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program File
@@ -1020,9 +1020,9 @@ c/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm
 /cmr17.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><
 C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmti9.pfb><C:/Program Fi
 les/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on VALENTINIS_report.pdf (8 pages, 355437 bytes).
+Output written on VALENTINIS_report.pdf (8 pages, 355444 bytes).
 PDF statistics:
- 191 PDF objects out of 1000 (max. 8388607)
+ 192 PDF objects out of 1000 (max. 8388607)
  29 named destinations out of 1000 (max. 500000)
  167 words of extra memory for PDF output out of 10000 (max. 10000000)
 
