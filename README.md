@@ -1,4 +1,9 @@
 # Cloud_final_project
+
+| Name | Surname | Student ID | email | Master |
+|:---:|:---:|:---:|:---:|:---:|
+| Alessio | Valentinis | SM3800008 | ALESSIO.VALENTINIS@studenti.units.it | DSAI |
+
 Repository containing scrpts and report for the final assignment for the Cloud Computing (basic module) final exam.
 Followingly the instructions for deploying the system and the tests. Just a copy-paste of the deployement section of the report.
 
